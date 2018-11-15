@@ -18,6 +18,7 @@ var initializer = function() {
         multiple: true,
         tags: true,
         data: collection,
+        tokenSeparators: [",", " "]
       };
 
       if (!!isRelation) {
@@ -31,6 +32,7 @@ var initializer = function() {
       $(el).select2(selectOptions);
 
       function getSelectedItems() {
+        console.log('getSelectedItems')
         var choices = $(el).parent('li.input').find('.select2-selection__choice');
         return $.map(choices, function(item) {
           return $(item).attr('title');
@@ -38,11 +40,13 @@ var initializer = function() {
       }
 
       function fillHiddenInput() {
+        console.log('fillHiddenInput')
         var hiddenInput = $('#' + prefix);
         hiddenInput.val(getSelectedItems().join());
       }
 
       function onItemRemoved(event) {
+        console.log('onItemRemoved')
         if (isRelation) {
           var itemId = '[id=\'' + prefix + '_' + event.params.data.id + '\']';
           $(itemId).remove();
@@ -52,6 +56,7 @@ var initializer = function() {
       }
 
       function onItemAdded(event) {
+        console.log('onItemAdded')
         if (isRelation) {
           var value = event.params.data.id;
           var selectedItemsContainer = $("[id='" + prefix + "_selected_values']");
